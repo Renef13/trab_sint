@@ -1,0 +1,67 @@
+# =========================================================
+# Configuração — PBIL-Fuzzy para NPFS
+# Valores marcados com "# TODO" ainda não foram calibrados
+# experimentalmente (ver Seção 8 da Especificação Técnica).
+# =========================================================
+
+instancia:
+  diretorio_small: "data/instances/Small"
+  diretorio_large: "data/instances/Large"
+  diretorio_custom: "data/instances/custom"
+
+pbil:
+  n_pop: 50                      # TODO(aluno) — tamanho da população
+  valor_inicial_matriz_p: 0.5    # decidido: todas as células de P começam em 0.5
+  distribuicao_amostragem: "normal_truncada"   # TODO(aluno) — "uniforme" ou "normal_truncada"
+  sigma_amostragem: 0.15         # TODO(aluno) — dispersão em torno de P[k][i]
+
+diversidade:
+  pct_elite: 0.10                # TODO(aluno) — fração da população que vira elite
+  pct_subelite: 0.20             # TODO(aluno) — fração de "elegiveis" que vira sub-elite
+  delta: 0.10                    # TODO(aluno) — teto de 20% (0.20) é o limite máximo permitido
+  preenchimento_insuficiente: "amostrar_extra_de_p"
+  # TODO(aluno) — o que fazer se |subelite| < (1-beta)*n_pop:
+  # opções: "repetir_individuos" | "amostrar_extra_de_p" | "reduzir_n_pop_efetivo"
+
+fuzzy:
+  motor_inferencia: "mamdani"
+  metodo_defuzzificacao: "centroide"   # TODO(aluno) — confirmar (centróide é o exemplo da especificação)
+  combinacao_q_sigma_rel: "media_ponderada"
+  # TODO(aluno) — como combinar q e sigma_rel num único sinal:
+  # opções: "media_ponderada" | "sub_componentes_separados"
+  tratamento_estagnacao: "fora_do_fuzzy"
+  # TODO(aluno) — "dentro_da_fuzzificacao" ou "fora_do_fuzzy" (checagem separada)
+
+  termos_progresso_qualidade:
+    - "muito_distante"
+    - "distante"
+    - "moderado"
+    - "proximo"
+    - "muito_proximo"
+
+  termos_diversidade:
+    - "baixa"
+    - "media"
+    - "alta"
+
+  pertinencia:
+    formato: "triangular"          # TODO(aluno) — "triangular" ou "trapezoidal"
+    limiares_q: []                 # TODO(aluno) — cortes de q para cada termo linguístico
+    limiares_sigma_rel: []         # TODO(aluno) — cortes de sigma_rel
+    limiares_diversidade: []       # TODO(aluno) — cortes de diversidade estrutural
+
+criterio_parada:
+  tipo: "numero_geracoes"          # TODO(aluno) — "numero_geracoes" | "estagnacao" | "combinado"
+  max_geracoes: 200                # TODO(aluno)
+  geracoes_estagnacao_limite: 30   # TODO(aluno) — usado só se tipo incluir "estagnacao"
+
+execucao:
+  seed: 42
+  n_execucoes_por_instancia: 30    # TODO(aluno) — número de runs independentes por instância
+  salvar_logs: true
+  salvar_plots: true
+
+caminhos:
+  logs: "data/results/logs"
+  outputs: "data/results/outputs"
+  plots: "data/results/plots"
