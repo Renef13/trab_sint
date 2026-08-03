@@ -40,8 +40,8 @@ isort==8.0.1
 Jinja2
 joblib
 kiwisolver
-#lightning
-#lightning-utilities
+lightning
+lightning-utilities
 llvmlite==0.48.0
 loguru
 Mako
@@ -88,7 +88,7 @@ PySocks
 pytest==9.1.1
 python-dateutil
 pytokens==0.4.1
-#pytorch-lightning
+pytorch-lightning
 PyYAML
 requests
 rich
@@ -107,8 +107,8 @@ tabulate
 tensorboard==2.21.0
 tensorboard-data-server==0.7.2
 threadpoolctl
-#torch
-#torchmetrics
+torch
+torchmetrics
 tornado
 tqdm
 typing-inspection
