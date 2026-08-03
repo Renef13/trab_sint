@@ -1,0 +1,16 @@
+2026-08-03 03:53:13 | pbil_fuzzy.main | INFO | Carregando instância: data/instances/Large/Ta001_4.txt
+2026-08-03 03:53:13 | pbil_fuzzy.main | INFO | Instância carregada: Instancia(nome='Ta001_4', numero_jobs=20, numero_maquinas=5)
+2026-08-03 03:53:13 | pbil_fuzzy.main | INFO | Iniciando execução do PBIL-Fuzzy...
+2026-08-03 03:53:23 | pbil_fuzzy.main | INFO | geracao=1 | cmax_melhor_geracao=3809.00 | cmax_best_historico=3809.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.4993
+2026-08-03 03:53:32 | pbil_fuzzy.main | INFO | geracao=2 | cmax_melhor_geracao=3809.00 | cmax_best_historico=3809.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.5029
+2026-08-03 03:53:38 | pbil_fuzzy.main | INFO | geracao=3 | cmax_melhor_geracao=3672.00 | cmax_best_historico=3672.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.4998
+2026-08-03 03:53:43 | pbil_fuzzy.main | INFO | geracao=4 | cmax_melhor_geracao=3672.00 | cmax_best_historico=3672.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.4989
+2026-08-03 03:53:49 | pbil_fuzzy.main | INFO | geracao=5 | cmax_melhor_geracao=3672.00 | cmax_best_historico=3672.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.5002
+2026-08-03 03:53:55 | pbil_fuzzy.main | INFO | geracao=6 | cmax_melhor_geracao=3651.00 | cmax_best_historico=3651.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.4976
+2026-08-03 03:54:03 | pbil_fuzzy.main | INFO | geracao=7 | cmax_melhor_geracao=3599.00 | cmax_best_historico=3599.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.5002
+2026-08-03 03:54:08 | pbil_fuzzy.main | INFO | geracao=8 | cmax_melhor_geracao=3505.00 | cmax_best_historico=3505.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.5000
+2026-08-03 03:54:13 | pbil_fuzzy.main | INFO | geracao=9 | cmax_melhor_geracao=3505.00 | cmax_best_historico=3505.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.4951
+2026-08-03 03:54:18 | pbil_fuzzy.main | INFO | geracao=10 | cmax_melhor_geracao=3505.00 | cmax_best_historico=3505.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.4971
+2026-08-03 03:54:18 | pbil_fuzzy.main | INFO | Execução finalizada. Cmax_best = 3505.00
+2026-08-03 03:54:18 | pbil_fuzzy.main | INFO | Resultado salvo em: data/results/outputs/Ta001_4.json
+2026-08-03 03:54:22 | pbil_fuzzy.main | INFO | Gráficos salvos em: data/results/plots

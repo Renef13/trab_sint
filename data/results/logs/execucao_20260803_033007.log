@@ -1,0 +1,36 @@
+2026-08-03 03:30:07 | pbil_fuzzy.main | INFO | Carregando instância: data/instances/Small/I_2_4_2_1.txt
+2026-08-03 03:30:07 | pbil_fuzzy.main | INFO | Instância carregada: Instancia(nome='I_2_4_2_1', numero_jobs=4, numero_maquinas=2)
+2026-08-03 03:30:08 | pbil_fuzzy.main | INFO | Iniciando execução do PBIL-Fuzzy...
+2026-08-03 03:30:08 | pbil_fuzzy.main | INFO | geracao=1 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.9917
+2026-08-03 03:30:08 | pbil_fuzzy.main | INFO | geracao=2 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.9633
+2026-08-03 03:30:09 | pbil_fuzzy.main | INFO | geracao=3 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=1.0125
+2026-08-03 03:30:09 | pbil_fuzzy.main | INFO | geracao=4 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=1.0708
+2026-08-03 03:30:10 | pbil_fuzzy.main | INFO | geracao=5 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.9506
+2026-08-03 03:30:12 | pbil_fuzzy.main | INFO | geracao=6 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.9505
+2026-08-03 03:30:14 | pbil_fuzzy.main | INFO | geracao=7 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.9423
+2026-08-03 03:30:15 | pbil_fuzzy.main | INFO | geracao=8 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.8892
+2026-08-03 03:30:16 | pbil_fuzzy.main | INFO | geracao=9 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=1.0343
+2026-08-03 03:30:18 | pbil_fuzzy.main | INFO | geracao=10 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.9764
+2026-08-03 03:30:19 | pbil_fuzzy.main | INFO | geracao=11 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.9126
+2026-08-03 03:30:20 | pbil_fuzzy.main | INFO | geracao=12 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.9427
+2026-08-03 03:30:22 | pbil_fuzzy.main | INFO | geracao=13 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.9242
+2026-08-03 03:30:24 | pbil_fuzzy.main | INFO | geracao=14 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.9496
+2026-08-03 03:30:25 | pbil_fuzzy.main | INFO | geracao=15 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.8853
+2026-08-03 03:30:27 | pbil_fuzzy.main | INFO | geracao=16 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.9760
+2026-08-03 03:30:29 | pbil_fuzzy.main | INFO | geracao=17 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.8675
+2026-08-03 03:30:30 | pbil_fuzzy.main | INFO | geracao=18 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.9147
+2026-08-03 03:30:33 | pbil_fuzzy.main | INFO | geracao=19 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.9484
+2026-08-03 03:30:34 | pbil_fuzzy.main | INFO | geracao=20 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.9246
+2026-08-03 03:30:36 | pbil_fuzzy.main | INFO | geracao=21 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.9038
+2026-08-03 03:30:41 | pbil_fuzzy.main | INFO | geracao=22 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.8508
+2026-08-03 03:30:45 | pbil_fuzzy.main | INFO | geracao=23 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.8222
+2026-08-03 03:30:48 | pbil_fuzzy.main | INFO | geracao=24 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.7829
+2026-08-03 03:30:52 | pbil_fuzzy.main | INFO | geracao=25 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.8930
+2026-08-03 03:30:54 | pbil_fuzzy.main | INFO | geracao=26 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.9310
+2026-08-03 03:30:57 | pbil_fuzzy.main | INFO | geracao=27 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.499 | beta=0.499 | diversidade_estrutural=0.8457
+2026-08-03 03:30:59 | pbil_fuzzy.main | INFO | geracao=28 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.8189
+2026-08-03 03:31:03 | pbil_fuzzy.main | INFO | geracao=29 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.7106
+2026-08-03 03:31:05 | pbil_fuzzy.main | INFO | geracao=30 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.8911
+2026-08-03 03:31:05 | pbil_fuzzy.main | INFO | Execução finalizada. Cmax_best = 147.00
+2026-08-03 03:31:05 | pbil_fuzzy.main | INFO | Resultado salvo em: data/results/outputs/I_2_4_2_1.json
+2026-08-03 03:31:15 | pbil_fuzzy.main | INFO | Gráficos salvos em: data/results/plots

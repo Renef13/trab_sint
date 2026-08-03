@@ -15,8 +15,9 @@ def construir_grafo_disjuntivo(instancia, ordens_por_maquina):
     """
     Constrói o grafo disjuntivo (DAG) de uma solução decodificada.
 
-    Vértices: uma operação (i, k) por par job x máquina.
-    Arestas de precedência: (i, k) -> (i, k+1), peso = p[i][k].
+    Vértices: uma operação (i, k) por par job x máquina, com atributo
+    duracao = p[i][k].
+    Arestas de precedência: (i, k) -> (i, k+1).
     Arestas disjuntivas: para cada máquina k, conectam jobs consecutivos
     na ordem decodificada daquela máquina.
 
@@ -37,14 +38,15 @@ def construir_grafo_disjuntivo(instancia, ordens_por_maquina):
     # vértices + arestas de precedência (dentro do mesmo job, entre máquinas)
     for indice_job in range(instancia.numero_jobs):
         for indice_maquina in range(instancia.numero_maquinas):
-            grafo.add_node((indice_job, indice_maquina))
+            grafo.add_node(
+                (indice_job, indice_maquina),
+                duracao=tempos_processamento[indice_job, indice_maquina],
+            )
 
         for indice_maquina in range(instancia.numero_maquinas - 1):
-            peso = tempos_processamento[indice_job, indice_maquina]
             grafo.add_edge(
                 (indice_job, indice_maquina),
                 (indice_job, indice_maquina + 1),
-                weight=peso,
             )
 
     # arestas disjuntivas (ordem escolhida dentro de cada máquina)
@@ -54,11 +56,9 @@ def construir_grafo_disjuntivo(instancia, ordens_por_maquina):
         for posicao in range(len(ordem_jobs_na_maquina) - 1):
             job_atual = ordem_jobs_na_maquina[posicao]
             proximo_job = ordem_jobs_na_maquina[posicao + 1]
-            peso = tempos_processamento[job_atual, indice_maquina]
             grafo.add_edge(
                 (job_atual, indice_maquina),
                 (proximo_job, indice_maquina),
-                weight=peso,
             )
 
     return grafo
@@ -69,7 +69,8 @@ def calcular_cmax(instancia, ordens_por_maquina):
     Calcula o Cmax (makespan) de uma solução decodificada.
 
     Cmax = comprimento do caminho mais longo (caminho crítico) do DAG
-    formado pelo grafo disjuntivo (Seção 2).
+    formado pelo grafo disjuntivo (Seção 2), usando duração nas operações
+    (pesos nos nós), não nas arestas.
 
     Parâmetros
     ----------
@@ -81,7 +82,16 @@ def calcular_cmax(instancia, ordens_por_maquina):
     float
     """
     grafo = construir_grafo_disjuntivo(instancia, ordens_por_maquina)
-    return nx.dag_longest_path_length(grafo, weight="weight")
+
+    tempos_conclusao = {}
+    for operacao in nx.topological_sort(grafo):
+        maior_conclusao_predecessor = max(
+            (tempos_conclusao[predecessor] for predecessor in grafo.predecessors(operacao)),
+            default=0.0,
+        )
+        tempos_conclusao[operacao] = maior_conclusao_predecessor + grafo.nodes[operacao]["duracao"]
+
+    return max(tempos_conclusao.values(), default=0.0)
 
 
 def avaliar_individuo(instancia, individuo):

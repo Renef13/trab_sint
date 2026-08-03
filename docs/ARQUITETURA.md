@@ -69,7 +69,7 @@ Contem a base do problema NPFS.
 - `individual.py`: define `Individuo`, sua matriz de chaves e a
   decodificacao em uma permutacao por maquina.
 - `evaluator.py`: constroi o `grafo_disjuntivo` e calcula `Cmax` pelo
-  caminho mais longo do DAG.
+  caminho critico do DAG, usando a duracao das operacoes como peso dos nos.
 
 Essa camada nao conhece PBIL, fuzzy, elite ou subelite. Ela so sabe
 representar e avaliar solucoes.
@@ -193,8 +193,9 @@ relatorios:
 
 ## Decisoes arquiteturais
 
-1. O avaliador usa `networkx.DiGraph` e caminho mais longo em DAG para
-   manter a implementacao alinhada com a formulacao por grafo disjuntivo.
+1. O avaliador usa `networkx.DiGraph` e caminho critico com duracao nos
+   vertices para manter a implementacao alinhada com a formulacao por
+   grafo disjuntivo.
 2. A `matriz_p` representa centros de chaves de prioridade, nao
    probabilidades discretas de alocacao.
 3. A diversidade e medida nas permutacoes decodificadas, nao nas chaves

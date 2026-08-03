@@ -111,22 +111,29 @@ operacao:
 (i, k) = operacao do job i na maquina k
 ```
 
+Cada vertice recebe a duracao da operacao:
+
+```text
+duracao(i, k) = p[i][k]
+```
+
 Arestas de precedencia do job:
 
 ```text
-(i, k) -> (i, k + 1), peso = p[i][k]
+(i, k) -> (i, k + 1)
 ```
 
 Arestas disjuntivas da maquina:
 
 ```text
-(job_atual, k) -> (proximo_job, k), peso = p[job_atual][k]
+(job_atual, k) -> (proximo_job, k)
 ```
 
-O `Cmax` e calculado como o comprimento do caminho mais longo no DAG:
+O `Cmax` e calculado por caminho critico com peso nos vertices:
 
 ```text
-Cmax = dag_longest_path_length(grafo_disjuntivo, weight="weight")
+finish(v) = duracao(v) + max(finish(pred) para pred em predecessores(v))
+Cmax = max(finish(v))
 ```
 
 No codigo:

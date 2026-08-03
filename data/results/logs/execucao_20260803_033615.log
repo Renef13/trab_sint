@@ -1,0 +1,11 @@
+2026-08-03 03:36:15 | pbil_fuzzy.main | INFO | Carregando instância: data/instances/Small/I_2_4_2_1.txt
+2026-08-03 03:36:15 | pbil_fuzzy.main | INFO | Instância carregada: Instancia(nome='I_2_4_2_1', numero_jobs=4, numero_maquinas=2)
+2026-08-03 03:36:16 | pbil_fuzzy.main | INFO | Iniciando execução do PBIL-Fuzzy...
+2026-08-03 03:36:18 | pbil_fuzzy.main | INFO | geracao=1 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.590 | beta=0.499 | diversidade_estrutural=0.4928
+2026-08-03 03:36:23 | pbil_fuzzy.main | INFO | geracao=2 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.536 | beta=0.500 | diversidade_estrutural=0.4959
+2026-08-03 03:36:26 | pbil_fuzzy.main | INFO | geracao=3 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.532 | beta=0.500 | diversidade_estrutural=0.5071
+2026-08-03 03:36:30 | pbil_fuzzy.main | INFO | geracao=4 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.506 | beta=0.500 | diversidade_estrutural=0.5047
+2026-08-03 03:36:35 | pbil_fuzzy.main | INFO | geracao=5 | cmax_melhor_geracao=147.00 | cmax_best_historico=147.00 | alpha=0.500 | beta=0.500 | diversidade_estrutural=0.5004
+2026-08-03 03:36:35 | pbil_fuzzy.main | INFO | Execução finalizada. Cmax_best = 147.00
+2026-08-03 03:36:35 | pbil_fuzzy.main | INFO | Resultado salvo em: data/results/outputs/I_2_4_2_1.json
+2026-08-03 03:36:44 | pbil_fuzzy.main | INFO | Gráficos salvos em: data/results/plots
