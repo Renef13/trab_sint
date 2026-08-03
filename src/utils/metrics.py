@@ -80,6 +80,14 @@ def calcular_diversidade_estrutural_agregada(distancias_kendall_tau):
     entrada do controlador fuzzy (Seção 5.3).
 
     Agregação por média — TODO(aluno) validar se é a melhor escolha.
+
+    TODO(aluno): dist(s) é a SOMA de distâncias de Kendall Tau sobre as
+    m máquinas (Seção 4.1, passo 6), então pode ultrapassar 1.0 quando
+    m > 1 — mas o universo fuzzy de diversidade_estrutural é [0, 1]
+    (fuzzy/membership.py). Atualmente o controller.py só faz *clip* em
+    1.0 (satura o sinal). O correto provavelmente é normalizar aqui,
+    ex.: dividir por m antes de retornar. Decidir junto com o resto da
+    calibração fuzzy (Seção 8).
     """
     if len(distancias_kendall_tau) == 0:
         return 0.0
