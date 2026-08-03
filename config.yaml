@@ -1,7 +1,7 @@
 # =========================================================
 # Configuração — PBIL-Fuzzy para NPFS
-# Valores marcados com "# TODO" ainda não foram calibrados
-# experimentalmente (ver Seção 8 da Especificação Técnica).
+# Valores iniciais calibrados por regra heurística para validar e executar
+# o PBIL-Fuzzy ponta a ponta. Podem ser refinados experimentalmente.
 # =========================================================
 
 instancia:
@@ -10,27 +10,26 @@ instancia:
   diretorio_custom: "data/instances/custom"
 
 pbil:
-  n_pop: 50                      # TODO(aluno) — tamanho da população
+  n_pop: 80
   valor_inicial_matriz_p: 0.5    # decidido: todas as células de P começam em 0.5
-  distribuicao_amostragem: "normal_truncada"   # TODO(aluno) — "uniforme" ou "normal_truncada"
-  sigma_amostragem: 0.15         # TODO(aluno) — dispersão em torno de P[k][i]
+  distribuicao_amostragem: "normal_truncada"
+  sigma_amostragem: 0.25
 
 diversidade:
-  pct_elite: 0.10                # TODO(aluno) — fração da população que vira elite
-  pct_subelite: 0.20             # TODO(aluno) — fração de "elegiveis" que vira sub-elite
-  delta: 0.10                    # TODO(aluno) — teto de 20% (0.20) é o limite máximo permitido
+  pct_elite: 0.08
+  pct_subelite: 0.35
+  delta: 0.20
   preenchimento_insuficiente: "amostrar_extra_de_p"
-  # TODO(aluno) — o que fazer se |subelite| < (1-beta)*n_pop:
-  # opções: "repetir_individuos" | "amostrar_extra_de_p" | "reduzir_n_pop_efetivo"
 
 fuzzy:
   motor_inferencia: "mamdani"
-  metodo_defuzzificacao: "centroide"   # TODO(aluno) — confirmar (centróide é o exemplo da especificação)
+  metodo_defuzzificacao: "centroide"
   combinacao_q_sigma_rel: "media_ponderada"
-  # TODO(aluno) — como combinar q e sigma_rel num único sinal:
-  # opções: "media_ponderada" | "sub_componentes_separados"
+  pesos_progresso_qualidade:
+    q: 0.80
+    sigma_rel: 0.20
   tratamento_estagnacao: "fora_do_fuzzy"
-  # TODO(aluno) — "dentro_da_fuzzificacao" ou "fora_do_fuzzy" (checagem separada)
+  limiar_muito_proximo_override: 0.05
 
   termos_progresso_qualidade:
     - "muito_distante"
@@ -45,19 +44,18 @@ fuzzy:
     - "alta"
 
   pertinencia:
-    formato: "triangular"          # TODO(aluno) — "triangular" ou "trapezoidal"
-    limiares_q: []                 # TODO(aluno) — cortes de q para cada termo linguístico
-    limiares_sigma_rel: []         # TODO(aluno) — cortes de sigma_rel
-    limiares_diversidade: []       # TODO(aluno) — cortes de diversidade estrutural
+    formato: "triangular"
+    limiares_progresso_qualidade: [0.05, 0.15, 0.35, 0.65]
+    limiares_diversidade: [0.25, 0.60]
 
 criterio_parada:
-  tipo: "numero_geracoes"          # TODO(aluno) — "numero_geracoes" | "estagnacao" | "combinado"
-  max_geracoes: 200                # TODO(aluno)
-  geracoes_estagnacao_limite: 30   # TODO(aluno) — usado só se tipo incluir "estagnacao"
+  tipo: "numero_geracoes"
+  max_geracoes: 300
+  geracoes_estagnacao_limite: 40
 
 execucao:
   seed: 42
-  n_execucoes_por_instancia: 30    # TODO(aluno) — número de runs independentes por instância
+  n_execucoes_por_instancia: 30
   salvar_logs: true
   salvar_plots: true
 

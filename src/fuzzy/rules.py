@@ -4,10 +4,11 @@ FAM (Fuzzy Associative Memory) 5x3 — Seção 5.5 da Especificação Técnica.
 Mapeia cada combinação (progresso_qualidade, diversidade_estrutural)
 para um par de termos de saída (alpha, beta).
 
-Apenas a ESTRUTURA está pronta: 14 das 15 células são TODO(aluno)
-(Seções 7 e 8, item 2). Preenchidas com um valor neutro placeholder
-("medio", "medio") só pra o sistema rodar ponta a ponta — DEVEM ser
-substituídas pelas regras reais antes de qualquer experimento válido.
+As regras abaixo implementam uma política inicial de intensificação e
+diversificação: quando a população está longe do melhor valor histórico,
+alpha tende a subir para acelerar a aprendizagem da matriz P; quando a
+diversidade estrutural está baixa, beta tende a cair para injetar mais
+subelite diversa na próxima geração.
 
 A linha "muito próximo do ótimo + estagnado" (Seção 5.5) NÃO faz parte
 desta FAM 5x3: estagnação não é um dos 5 termos de Progresso/Qualidade
@@ -24,32 +25,31 @@ TERMOS_DIVERSIDADE = ["baixa", "media", "alta"]
 
 
 # FAM[termo_progresso][termo_diversidade] = (termo_alpha, termo_beta)
-# TODO(aluno): preencher as 14 células restantes (Seção 5.5).
 FAM = {
     "muito_proximo": {
-        "baixa": ("medio", "medio"),   # TODO(aluno)
-        "media": ("medio", "medio"),   # TODO(aluno)
-        "alta": ("medio", "medio"),    # TODO(aluno)
+        "baixa": ("baixo", "baixo"),
+        "media": ("baixo", "medio"),
+        "alta": ("medio", "medio"),
     },
     "proximo": {
-        "baixa": ("medio", "medio"),   # TODO(aluno)
-        "media": ("medio", "medio"),   # TODO(aluno)
-        "alta": ("medio", "medio"),    # TODO(aluno)
+        "baixa": ("baixo", "baixo"),
+        "media": ("medio", "medio"),
+        "alta": ("medio", "alto"),
     },
     "moderado": {
-        "baixa": ("medio", "medio"),   # TODO(aluno)
-        "media": ("medio", "medio"),   # TODO(aluno)
-        "alta": ("medio", "medio"),    # TODO(aluno)
+        "baixa": ("medio", "baixo"),
+        "media": ("medio", "medio"),
+        "alta": ("alto", "alto"),
     },
     "distante": {
-        "baixa": ("medio", "medio"),   # TODO(aluno)
-        "media": ("medio", "medio"),   # TODO(aluno)
-        "alta": ("medio", "medio"),    # TODO(aluno)
+        "baixa": ("medio", "baixo"),
+        "media": ("alto", "medio"),
+        "alta": ("alto", "alto"),
     },
     "muito_distante": {
-        "baixa": ("medio", "medio"),   # TODO(aluno)
-        "media": ("medio", "medio"),   # TODO(aluno)
-        "alta": ("medio", "medio"),    # TODO(aluno)
+        "baixa": ("alto", "baixo"),
+        "media": ("alto", "medio"),
+        "alta": ("alto", "alto"),
     },
 }
 
@@ -103,8 +103,7 @@ def esta_muito_proximo_do_otimo(q, limiar_muito_proximo):
     Parâmetros
     ----------
     limiar_muito_proximo : float
-        TODO(aluno) — mesmo primeiro limiar usado na fuzzificação de
-        progresso_qualidade (Seção 8, item 3).
+        Mesmo primeiro limiar usado na fuzzificação de progresso_qualidade.
     """
     return q <= limiar_muito_proximo
 

@@ -228,7 +228,7 @@ sigma_rel = desvio_padrao_cmax / media_cmax
 Depois o controlador combina:
 
 ```text
-progresso_qualidade = 0.7 * q + 0.3 * sigma_rel
+progresso_qualidade = 0.8 * q + 0.2 * sigma_rel
 ```
 
 Os valores sao limitados ao intervalo `[0, 1]`.
@@ -244,7 +244,11 @@ Termos linguisticos:
 ### 8.2 Entrada diversidade_estrutural
 
 A diversidade estrutural agregada e a media das distancias estruturais
-dos elegiveis ate a elite.
+dos elegiveis ate a elite, normalizada pelo numero de maquinas:
+
+```text
+diversidade_estrutural = media(distancias_kendall_tau) / numero_maquinas
+```
 
 Termos linguisticos:
 
@@ -270,17 +274,30 @@ beta alto  -> mais individuos amostrados da matriz_p
 beta baixo -> mais copias diretas da subelite
 ```
 
-### 8.4 FAM atual
+### 8.4 FAM
 
-A estrutura da FAM esta implementada em `src/fuzzy/rules.py`, mas as
-regras ainda estao como placeholder:
+A FAM implementada em `src/fuzzy/rules.py` usa a seguinte politica:
 
 ```text
-(alpha, beta) = ("medio", "medio")
+se progresso_qualidade indica populacao distante:
+    alpha sobe para acelerar a aprendizagem da matriz_p
+
+se diversidade_estrutural esta baixa:
+    beta desce para injetar mais subelite diversa
+
+se diversidade_estrutural esta alta:
+    beta sobe para aproveitar mais a matriz_p atualizada
 ```
 
-Isso permite testar o pipeline completo, mas ainda nao representa uma
-calibracao final do controlador fuzzy.
+Tabela da FAM:
+
+| Progresso / Diversidade | baixa | media | alta |
+|---|---|---|---|
+| muito_proximo | alpha baixo, beta baixo | alpha baixo, beta medio | alpha medio, beta medio |
+| proximo | alpha baixo, beta baixo | alpha medio, beta medio | alpha medio, beta alto |
+| moderado | alpha medio, beta baixo | alpha medio, beta medio | alpha alto, beta alto |
+| distante | alpha medio, beta baixo | alpha alto, beta medio | alpha alto, beta alto |
+| muito_distante | alpha alto, beta baixo | alpha alto, beta medio | alpha alto, beta alto |
 
 ### 8.5 Estagnacao
 
@@ -331,7 +348,8 @@ para numero_geracao = 1 ate max_geracoes:
         diversidade
 
     proxima_populacao:
-        round(beta * N_pop) individuos amostrados da matriz_p
+        preservar copias da elite
+        round(beta * vagas_restantes) individuos amostrados da matriz_p
         restante copiado da subelite
         se faltar subelite, completar amostrando da matriz_p
 
@@ -363,6 +381,7 @@ Os hiperparametros ficam em `config.yaml`.
 - `fuzzy.motor_inferencia`
 - `fuzzy.metodo_defuzzificacao`
 - `fuzzy.combinacao_q_sigma_rel`
+- `fuzzy.pesos_progresso_qualidade`
 - `fuzzy.tratamento_estagnacao`
 - termos linguisticos
 - limiares de pertinencia
@@ -390,16 +409,23 @@ parada principal.
 
 `scripts/generate_plots.py` le esse resumo e gera boxplot comparativo.
 
-## 12. Pontos pendentes
+## 12. Valores adotados
 
-Para transformar a implementacao funcional em versao final de experimento,
-faltam:
+Configuracao inicial adotada:
 
-1. Calibrar as 15 celulas da FAM.
-2. Definir limiares reais das funcoes de pertinencia.
-3. Validar os pesos da combinacao `q` e `sigma_rel`.
-4. Normalizar ou justificar a diversidade estrutural quando a soma por
-   maquinas ultrapassar 1.
-5. Definir protocolo estatistico final: numero de execucoes, instancias,
-   comparacoes e metricas.
-6. Implementar ou remover `scripts/compare_results.py`.
+| Grupo | Valor |
+|---|---|
+| `n_pop` | 80 |
+| `sigma_amostragem` | 0.25 |
+| `pct_elite` | 0.08 |
+| `pct_subelite` | 0.35 |
+| `delta` | 0.20 |
+| `max_geracoes` | 300 |
+| `geracoes_estagnacao_limite` | 40 |
+| pesos de progresso | `q=0.80`, `sigma_rel=0.20` |
+| limiares de progresso | `[0.05, 0.15, 0.35, 0.65]` |
+| limiares de diversidade | `[0.25, 0.60]` |
+
+Esses valores fecham a especificacao operacional do trabalho. Ajustes
+futuros devem ser tratados como novos experimentos de calibracao, sempre
+registrando a configuracao usada.

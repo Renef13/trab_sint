@@ -1,13 +1,9 @@
 """
 Funções de pertinência (membership functions) do controlador fuzzy.
 
-Baseado na Seção 5 da Especificação Técnica. Os limiares e o formato
-exato das funções de pertinência são TODO(aluno) (Seção 8, item 3) —
-aqui a estrutura já está pronta, com funções PLACEHOLDER geradas
-automaticamente (uniformemente distribuídas no universo, via
-skfuzzy.automf), para o sistema já rodar ponta a ponta. Quando os
-limiares forem decididos, passe-os como argumento (ver `limiares=`)
-que o sistema passa a usar funções triangulares calibradas.
+Baseado na Seção 5 da Especificação Técnica. Quando os limiares vêm do
+config.yaml, são usadas funções triangulares calibradas; se não vierem,
+o sistema usa uma partição automática uniforme como fallback.
 """
 
 import numpy as np
@@ -40,9 +36,8 @@ def construir_antecedente_progresso_qualidade(faixa=(0.0, 1.0, 0.001),
         (inicio, fim, passo) do universo de discurso.
     limiares : list[float] ou None
         4 cortes internos definindo as fronteiras dos 5 termos
-        linguísticos, em ordem crescente. Se None (ainda não calibrado
-        — TODO(aluno) Seção 8 item 3), usa distribuição automática
-        uniforme.
+        linguísticos, em ordem crescente. Se None, usa distribuição
+        automática uniforme.
 
     Retorna
     -------
@@ -123,8 +118,7 @@ def construir_consequente_beta(faixa=(0.0, 1.0, 0.001)):
 def _aplicar_triangulos_por_limiares(variavel_fuzzy, universo, nomes, limiares):
     """
     Função interna: constrói funções de pertinência triangulares a
-    partir de uma lista de cortes internos (limiares), para quando a
-    calibração já tiver sido decidida (Seção 8, item 3).
+    partir de uma lista de pontos centrais/limiares internos.
 
     O primeiro e o último termo viram "ombros" (patamar no extremo do
     universo); os termos intermediários são triângulos centrados em
@@ -145,19 +139,15 @@ def _aplicar_triangulos_por_limiares(variavel_fuzzy, universo, nomes, limiares):
             f"recebido {len(limiares)}."
         )
 
-    pontos = [universo[0]] + list(limiares) + [universo[-1]]
+    pontos = [float(universo[0])] + list(limiares) + [float(universo[-1])]
     numero_termos = len(nomes)
 
     for indice_termo, nome_termo in enumerate(nomes):
         if indice_termo == 0:
-            # ombro descendente: 1.0 no início do universo, cai até o
-            # primeiro limiar
             a, b, c = pontos[0], pontos[0], pontos[1]
         elif indice_termo == numero_termos - 1:
-            # ombro ascendente: sobe a partir do último limiar, 1.0 no
-            # fim do universo
             a, b, c = pontos[-2], pontos[-1], pontos[-1]
         else:
-            a, b, c = pontos[indice_termo], pontos[indice_termo + 1], pontos[indice_termo + 2]
+            a, b, c = pontos[indice_termo - 1], pontos[indice_termo], pontos[indice_termo + 1]
 
         variavel_fuzzy[nome_termo] = fuzz.trimf(universo, [a, b, c])

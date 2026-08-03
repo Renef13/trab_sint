@@ -93,8 +93,8 @@ Contem o controlador fuzzy Mamdani.
 
 - `membership.py`: cria as funcoes de pertinencia para
   `progresso_qualidade`, `diversidade_estrutural`, `alpha` e `beta`.
-- `rules.py`: declara a FAM 5x3. Atualmente a estrutura esta pronta, mas
-  as regras ainda estao como valores neutros placeholder.
+- `rules.py`: declara a FAM 5x3 com politica inicial de intensificacao e
+  diversificacao.
 - `controller.py`: combina `q` e `sigma_rel`, executa a inferencia fuzzy e
   retorna `(alpha, beta)`.
 
@@ -206,21 +206,21 @@ relatorios:
 6. O criterio de parada efetivamente implementado na engine e o numero de
    geracoes. A estagnacao hoje atua apenas como override de alpha/beta.
 
-## Estado atual e limitacoes
+## Estado atual
 
-O projeto ja executa ponta a ponta, mas algumas escolhas ainda sao
-experimentais:
+O projeto ja executa ponta a ponta com uma configuracao inicial completa:
 
-- A FAM em `src/fuzzy/rules.py` usa valores neutros (`medio`, `medio`) nas
-  15 celulas, portanto os resultados ainda nao devem ser tratados como
-  calibracao final.
-- As funcoes de pertinencia usam `automf` quando nao recebem limiares
-  calibrados.
-- `q` e `sigma_rel` sao combinados por media ponderada no
-  `ControladorFuzzy`.
-- A diversidade estrutural pode ultrapassar 1 quando soma distancias por
-  maquina; a engine limita o valor no controlador fuzzy.
-- `scripts/compare_results.py` ainda nao possui implementacao.
+- A FAM em `src/fuzzy/rules.py` diferencia cenarios de proximidade e
+  diversidade, ajustando `alpha` e `beta`.
+- As funcoes de pertinencia usam limiares triangulares definidos em
+  `config.yaml`.
+- `q` e `sigma_rel` sao combinados por media ponderada com pesos 0.80 e
+  0.20.
+- A diversidade estrutural e normalizada pelo numero de maquinas antes de
+  entrar no fuzzy.
+- `scripts/compare_results.py` compara dois ou mais resumos de
+  experimentos por `cmax_medio`, `cmax_melhor`, desvio e gap percentual.
 
-Essas limitacoes nao impedem validacao funcional, mas devem ser resolvidas
-ou descritas no relatorio antes de apresentar conclusoes de desempenho.
+Esses valores sao uma calibracao heuristica inicial. Eles tornam o sistema
+executavel sem lacunas, mas ainda podem ser refinados por comparacao
+experimental no relatorio.

@@ -82,7 +82,18 @@ class PBILFuzzy:
             valor_inicial=config["pbil"]["valor_inicial_matriz_p"],
         )
 
-        self.controlador_fuzzy = ControladorFuzzy()
+        config_fuzzy = config.get("fuzzy", {})
+        config_pertinencia = config_fuzzy.get("pertinencia", {})
+        pesos_progresso = config_fuzzy.get("pesos_progresso_qualidade", {})
+
+        self.controlador_fuzzy = ControladorFuzzy(
+            limiares_progresso_qualidade=config_pertinencia.get(
+                "limiares_progresso_qualidade"
+            ),
+            limiares_diversidade=config_pertinencia.get("limiares_diversidade"),
+            peso_q=pesos_progresso.get("q", 0.8),
+            peso_sigma_rel=pesos_progresso.get("sigma_rel", 0.2),
+        )
 
         self.cmax_best = float("inf")
         self.resultado = ResultadoExecucao()
@@ -121,7 +132,7 @@ class PBILFuzzy:
         geracoes_estagnacao_limite = self.config["criterio_parada"]["geracoes_estagnacao_limite"]
         limiar_muito_proximo = self.config.get("fuzzy", {}).get(
             "limiar_muito_proximo_override", 0.05
-        )  # TODO(aluno): calibrar junto com os limiares da Seção 8
+        )
 
         estagnado = verificar_estagnacao(
             self.resultado.historico_cmax_best, geracoes_estagnacao_limite
@@ -145,21 +156,24 @@ class PBILFuzzy:
 
         return alpha, beta
 
-    def _compor_proxima_populacao(self, subelite, beta):
+    def _compor_proxima_populacao(self, elite, subelite, beta):
         """
         Passo 8 da Seção 4.1: beta*N_pop amostrados de P (atualizada),
         (1-beta)*N_pop cópias diretas da sub-elite.
 
-        TODO(aluno): regra de preenchimento se |subelite| for menor que
-        (1-beta)*N_pop — atualmente completa amostrando extra de P
-        (config.yaml -> diversidade.preenchimento_insuficiente).
+        Preserva uma cópia da elite para manter elitismo explícito entre
+        gerações. O restante segue a proporção controlada por beta; se a
+        subelite for insuficiente, completa amostrando extra da matriz P.
         """
         n_pop = self.config["pbil"]["n_pop"]
         sigma = self.config["pbil"]["sigma_amostragem"]
         distribuicao = self.config["pbil"]["distribuicao_amostragem"]
 
-        tamanho_amostrado = round(beta * n_pop)
-        tamanho_subelite_desejado = n_pop - tamanho_amostrado
+        copias_elite = list(elite)
+        vagas_restantes = max(0, n_pop - len(copias_elite))
+
+        tamanho_amostrado = round(beta * vagas_restantes)
+        tamanho_subelite_desejado = vagas_restantes - tamanho_amostrado
 
         proxima_populacao = amostrar_populacao(
             self.matriz_p, tamanho_amostrado, sigma, distribuicao, self.gerador_aleatorio
@@ -175,6 +189,7 @@ class PBILFuzzy:
             copias_subelite.extend(preenchimento_extra)
 
         proxima_populacao.extend(copias_subelite)
+        proxima_populacao.extend(copias_elite)
 
         for individuo in proxima_populacao:
             individuo.decodificar()
@@ -214,7 +229,8 @@ class PBILFuzzy:
             elite = selecao["elite"]
             subelite = selecao["subelite"]
             diversidade_estrutural_agregada = calcular_diversidade_estrutural_agregada(
-                selecao["distancias_elegiveis"]
+                selecao["distancias_elegiveis"],
+                numero_maquinas=self.instancia.numero_maquinas,
             )
 
             alpha, beta = self._calcular_alpha_beta(
@@ -234,7 +250,7 @@ class PBILFuzzy:
                     alpha, beta, diversidade_estrutural_agregada,
                 )
 
-            populacao = self._compor_proxima_populacao(subelite, beta)
+            populacao = self._compor_proxima_populacao(elite, subelite, beta)
             avaliar_populacao(self.instancia, populacao)
             populacao.sort(key=lambda individuo: individuo.cmax)
 

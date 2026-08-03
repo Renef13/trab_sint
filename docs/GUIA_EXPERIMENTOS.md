@@ -26,27 +26,32 @@ Confira `config.yaml`, principalmente:
 
 ```yaml
 pbil:
-  n_pop: 50
+  n_pop: 80
   distribuicao_amostragem: "normal_truncada"
-  sigma_amostragem: 0.15
+  sigma_amostragem: 0.25
 
 diversidade:
-  pct_elite: 0.10
-  pct_subelite: 0.20
-  delta: 0.10
+  pct_elite: 0.08
+  pct_subelite: 0.35
+  delta: 0.20
+
+fuzzy:
+  pesos_progresso_qualidade:
+    q: 0.80
+    sigma_rel: 0.20
 
 criterio_parada:
-  max_geracoes: 200
+  max_geracoes: 300
 
 execucao:
   seed: 42
   n_execucoes_por_instancia: 30
 ```
 
-Observacao importante: a FAM fuzzy ainda esta com regras placeholder em
-`src/fuzzy/rules.py`. Portanto, os resultados atuais validam o pipeline,
-mas nao devem ser apresentados como resultado final de desempenho sem essa
-ressalva.
+A FAM fuzzy inicial ja esta definida em `src/fuzzy/rules.py`. Ela usa
+uma politica de intensificacao quando a populacao esta distante do melhor
+Cmax historico e de diversificacao quando a diversidade estrutural esta
+baixa.
 
 ## 3. Execucao unica
 
@@ -204,8 +209,7 @@ Para cada conjunto de instancias:
 4. Rodar todas as instancias do conjunto.
 5. Reportar media, desvio padrao, melhor, pior e tempo medio.
 6. Guardar os arquivos JSON e CSV usados para gerar tabelas e graficos.
-7. Registrar no texto do relatorio que a FAM fuzzy esta calibrada ou, se
-   nao estiver, que os resultados sao de validacao funcional.
+7. Registrar no texto do relatorio os parametros usados na configuracao.
 
 ## 8. Interpretacao dos resultados
 
@@ -220,8 +224,7 @@ Use `historico_cmax_best` para verificar convergencia. Uma curva plana
 muito cedo pode indicar estagnacao.
 
 Use `historico_alpha`, `historico_beta` e diversidade para discutir o
-comportamento do controlador fuzzy, mas lembre que a FAM atual ainda e
-placeholder.
+comportamento do controlador fuzzy.
 
 ## 9. Cuidados praticos
 
@@ -233,8 +236,9 @@ placeholder.
   exemplo `resumo_large_npop40_ger100.json`.
 - Se mudar a FAM ou os limiares fuzzy, rode novamente os experimentos; os
   resultados antigos nao sao comparaveis diretamente.
-- `scripts/compare_results.py` esta vazio no estado atual do projeto, entao
-  a comparacao deve ser feita pelo notebook 06 ou por `generate_plots.py`.
+- `scripts/compare_results.py` compara dois ou mais arquivos
+  `resumo_experimentos.json`, gerando tabela com medias, desvios e gap
+  percentual por instancia.
 
 ## 10. Checklist final de experimento
 

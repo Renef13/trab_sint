@@ -25,16 +25,16 @@ class ControladorFuzzy:
     """
 
     def __init__(self, limiares_progresso_qualidade=None, limiares_diversidade=None,
-                 peso_q=0.7, peso_sigma_rel=0.3):
+                 peso_q=0.8, peso_sigma_rel=0.2):
         """
         Parâmetros
         ----------
         limiares_progresso_qualidade, limiares_diversidade : list[float] ou None
-            Repassados para membership.py. None = placeholders automáticos.
+            Repassados para membership.py. None = partição automática.
         peso_q, peso_sigma_rel : float
-            Pesos da combinação de q e sigma_rel (Seção 8, item 5 —
-            TODO(aluno): validar se média ponderada com esses pesos é
-            de fato a melhor escolha; valores aqui são placeholder).
+            Pesos da combinação de q e sigma_rel. O gap relativo recebe
+            peso maior porque mede qualidade em relação ao melhor Cmax
+            histórico; a dispersão atua como sinal secundário de espalhamento.
         """
         self.peso_q = peso_q
         self.peso_sigma_rel = peso_sigma_rel

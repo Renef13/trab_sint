@@ -72,23 +72,25 @@ def atualizar_cmax_best(cmax_best_atual, lista_cmax_geracao):
     return min(cmax_best_atual, melhor_da_geracao)
 
 
-def calcular_diversidade_estrutural_agregada(distancias_kendall_tau):
+def calcular_diversidade_estrutural_agregada(distancias_kendall_tau, numero_maquinas=None):
     """
     Agrega as distâncias de Kendall Tau individuais (uma por candidato
     elegível, calculadas na Fase 4 - pbil/diversity.py) num único valor
     escalar de diversidade estrutural da população, usado como segunda
     entrada do controlador fuzzy (Seção 5.3).
 
-    Agregação por média — TODO(aluno) validar se é a melhor escolha.
-
-    TODO(aluno): dist(s) é a SOMA de distâncias de Kendall Tau sobre as
-    m máquinas (Seção 4.1, passo 6), então pode ultrapassar 1.0 quando
-    m > 1 — mas o universo fuzzy de diversidade_estrutural é [0, 1]
-    (fuzzy/membership.py). Atualmente o controller.py só faz *clip* em
-    1.0 (satura o sinal). O correto provavelmente é normalizar aqui,
-    ex.: dividir por m antes de retornar. Decidir junto com o resto da
-    calibração fuzzy (Seção 8).
+    Como a distância de cada candidato é uma soma das distâncias de
+    Kendall Tau sobre as máquinas, a normalização divide a média pelo
+    número de máquinas. Assim a entrada do fuzzy permanece em [0, 1]:
+    0 indica estrutura igual à elite e 1 indica estrutura oposta em todas
+    as máquinas.
     """
     if len(distancias_kendall_tau) == 0:
         return 0.0
-    return float(np.mean(distancias_kendall_tau))
+
+    diversidade_media = float(np.mean(distancias_kendall_tau))
+
+    if numero_maquinas is not None and numero_maquinas > 0:
+        diversidade_media /= numero_maquinas
+
+    return float(np.clip(diversidade_media, 0.0, 1.0))
